@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function LandingPage() {
-	const [state, setState] = useState(false);
+	const [state, setState] = useState<boolean>(false);
 
 	const navigation = [
 		{ title: "Partners", path: "/" },

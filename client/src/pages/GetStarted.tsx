@@ -1,16 +1,17 @@
+import { useAuthStore } from "@/hooks/useAuthStore";
 import { firebaseAuth } from "@/lib/firebase";
-import { GoogleAuthProvider, signInWithPopup, UserCredential } from "firebase/auth";
-import { useState } from "react";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function GetStarted() {
-	const [user, setUser] = useState<UserCredential | null>(null);
+	const { setUser } = useAuthStore();
+	const navigate = useNavigate()
 	const onClickSignIn = async () => {
 		const userCred = await signInWithPopup(firebaseAuth, new GoogleAuthProvider());
-
-		setUser(userCred);
+		setUser(userCred.user);
+		navigate("/home");
 	};
 
-	console.log(user);
 	return (
 		<main className="w-full h-screen flex flex-col items-center justify-center px-4">
 			<div className="max-w-sm w-full text-gray-600 space-y-5">
