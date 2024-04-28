@@ -28,7 +28,7 @@ export const enum IApiEndpoint {
 	GET_PHOTOS = "photos/get/all",
 	GET_PHOTO_BY_ID = "photos/get/by-id",
 	GET_PHOTOS_BY_ALBUM_ID = "photos/get/by-album-id",
-	UPDATE_PHOTO = "photos/update",
+	UPDATE_PHOTO_TITLE = "photos/update/title",
 }
 
 export interface IMethodParams {

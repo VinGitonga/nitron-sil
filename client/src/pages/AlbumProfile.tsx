@@ -1,7 +1,7 @@
 import useAlbumUtils from "@/hooks/useAlbumUtils";
 import { IAlbum } from "@/types/Album";
 import { Loader2 } from "lucide-react";
-import { FC, Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Image from "@/components/images/Image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -9,12 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import UploadImageModal from "@/components/modals/UploadImageModal";
 import usePhotoUtils from "@/hooks/usePhotoUtils";
 import { IPhoto } from "@/types/Photo";
-import { Button } from "@/components/ui/button";
-import { FiEdit3 } from "react-icons/fi";
-
-interface ImageCardItemProps {
-	image: IPhoto;
-}
+import PhotoCardItem from "@/components/app-photos/PhotoCardItem";
 
 const AlbumProfile = () => {
 	const [albumInfo, setAlbumInfo] = useState<IAlbum | null>(null);
@@ -114,7 +109,7 @@ const AlbumProfile = () => {
 			{photos.length && photos.length > 0 && (
 				<div className="columns-1 md:columns-2 xl:columns-3 gap-7">
 					{photos.map((photo) => (
-						<ImageCardItem key={photo._id} image={photo} />
+						<PhotoCardItem key={photo._id} image={photo} refresh={refresh} />
 					))}
 				</div>
 			)}
@@ -124,36 +119,6 @@ const AlbumProfile = () => {
 				</div>
 			)}
 		</>
-	);
-};
-
-const ImageCardItem: FC<ImageCardItemProps> = ({ image }) => {
-	return (
-		<div className="break-inside-avoid mb-8">
-			<div className="relative group">
-				<Suspense
-					fallback={
-						<div className="flex items-center justify-center">
-							<Loader2 className="w-10 h-10 animate-spin" />
-						</div>
-					}>
-					<Image srcList={[image.imageUrl, "https://pagedone.io/asset/uploads/1688031414.png"]} alt="Gallery image" className="h-auto max-w-full rounded-lg" />
-				</Suspense>
-				<div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity opacity-0 group-hover:opacity-100 rounded-lg">
-					<div className="flex flex-col justify-between h-full p-2">
-						<div className="">
-							<p className="text-white">{image?.album?.title}</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<p className="text-white">{image?.title}</p>
-							<Button size={"icon"} variant={"ghost"} className="rounded-full hover:bg-gray-500">
-								<FiEdit3 className="text-gray-200" />
-							</Button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	);
 };
 

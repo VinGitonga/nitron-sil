@@ -9,8 +9,13 @@ type SavePhotoInfo = {
 	url: string;
 };
 
+type UpdatePhotoInfo = {
+	photoId: string;
+	title: string;
+};
+
 const usePhotoUtils = () => {
-	const { post, get } = useApi();
+	const { post, get, put } = useApi();
 
 	const savePhoto = useCallback(
 		async (photo: SavePhotoInfo) => {
@@ -48,7 +53,22 @@ const usePhotoUtils = () => {
 		[get]
 	);
 
-	return { savePhoto, getPhotos, getPhotosByAlbumId };
+	const updatePhotoTitle = useCallback(
+		async (photo: UpdatePhotoInfo) => {
+			const resp = await put<IApiResponse<IPhoto>>({
+				endpoint: IApiEndpoint.UPDATE_PHOTO_TITLE,
+				data: {
+					photoId: photo.photoId,
+					title: photo.title,
+				},
+			});
+
+			return resp.data;
+		},
+		[put]
+	);
+
+	return { savePhoto, getPhotos, getPhotosByAlbumId, updatePhotoTitle };
 };
 
 export default usePhotoUtils;
