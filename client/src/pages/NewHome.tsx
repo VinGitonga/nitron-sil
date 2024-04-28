@@ -5,6 +5,7 @@ import { UserDocument } from "@/types/User";
 import { getInitials } from "@/utils";
 import { Loader2, SquareLibraryIcon } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 
 type UserCardItemProps = {
@@ -33,6 +34,9 @@ const NewHome = () => {
 
 	return (
 		<div>
+			<Helmet>
+				<title>Home - Nitron</title>
+			</Helmet>
 			<div className="">
 				<h1 className="font-bold text-xl">Home</h1>
 				<p>List of all users and their albums. This page is just a demo to show how the API works. The data is fetched from the backend and displayed here.</p>

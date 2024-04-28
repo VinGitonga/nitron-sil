@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { FC } from "react";
+import { Helmet } from "react-helmet-async";
 import { FiEdit3 } from "react-icons/fi";
 
 type ImageItem = {
@@ -48,10 +49,13 @@ const images: ImageItem[] = [
 const Photos = () => {
 	return (
 		<div>
+			<Helmet>
+				<title>Photos - Nitron</title>
+			</Helmet>
 			<div className="columns-1 md:columns-2 xl:columns-3 gap-7 ">
-                {images.map((image, index) => (
-                    <ImageCardItem key={index} image={image} />
-                ))}
+				{images.map((image, index) => (
+					<ImageCardItem key={index} image={image} />
+				))}
 				<div className="break-inside-avoid mb-8">
 					<div className="relative group">
 						<img className="h-auto max-w-full rounded-lg" src="https://pagedone.io/asset/uploads/1688031162.jpg" alt="Gallery image" />
@@ -70,7 +74,6 @@ const Photos = () => {
 						</div>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	);

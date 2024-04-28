@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import Image from "@/components/images/Image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import UploadImageModal from "@/components/modals/UploadImageModal";
 
 const AlbumProfile = () => {
 	const [albumInfo, setAlbumInfo] = useState<IAlbum | null>(null);
@@ -65,7 +66,10 @@ const AlbumProfile = () => {
 									})}
 								</p>
 							</div>
-							<Badge>{albumInfo.photoCount} photos</Badge>
+							<div className="flex items-center space-x-2">
+								<Badge>{albumInfo.photoCount} photos</Badge>
+								<UploadImageModal />
+							</div>
 						</div>
 					</div>
 				</>

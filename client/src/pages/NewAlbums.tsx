@@ -6,6 +6,7 @@ import useAlbumUtils from "@/hooks/useAlbumUtils";
 import { IAlbum } from "@/types/Album";
 import { Loader2 } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 
 interface AlbumCardItemProps {
@@ -34,6 +35,11 @@ const NewAlbums = () => {
 
 	return (
 		<div>
+			<Helmet>
+				<title>
+					Albums - Nitron
+				</title>
+			</Helmet>
 			<div className="flex items-center justify-between">
 				<div className="">
 					<h1 className="font-bold text-xl">Albums</h1>
