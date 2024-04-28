@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Photo } from "./schemas/photo.schema";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { CreatePhotoDto } from "./dto/create-photo.dto";
 
 @Injectable()
@@ -68,10 +68,11 @@ export class PhotosService {
 	}
 
 	async getPhotosByAlbumId(albumId: string) {
+		console.log(albumId);
 		return this.photoModel.aggregate([
 			{
 				$match: {
-					album: albumId,
+					album: new mongoose.Types.ObjectId(albumId),
 				},
 			},
 			{

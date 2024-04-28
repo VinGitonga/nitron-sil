@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Post, Put, Query, Res } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, Post, Put, Query, Res } from "@nestjs/common";
 import { PhotosService } from "./photos.service";
 import { CreatePhotoDto } from "./dto/create-photo.dto";
 import { Response } from "express";
@@ -28,7 +28,7 @@ export class PhotosController {
 		}
 	}
 
-	@Post("get/all")
+	@Get("get/all")
 	async getPhotos(@Res() res: Response<ApiResponseType<PhotoDocument[]>>) {
 		try {
 			const photos = await this.photosService.getPhotos();
@@ -46,7 +46,7 @@ export class PhotosController {
 		}
 	}
 
-	@Post("get/by-id")
+	@Get("get/by-id")
 	async getPhotoById(@Query("id") id: string, @Res() res: Response<ApiResponseType<PhotoDocument>>) {
 		try {
 			const photo = await this.photosService.getPhotoById(id);
@@ -68,7 +68,7 @@ export class PhotosController {
 		}
 	}
 
-	@Post("get/by-album-id")
+	@Get("get/by-album-id")
 	async getPhotosByAlbumId(@Query("albumId") albumId: string, @Res() res: Response<ApiResponseType<PhotoDocument[]>>) {
 		try {
 			const photos = await this.photosService.getPhotosByAlbumId(albumId);

@@ -40,7 +40,7 @@ const usePhotoUtils = () => {
 		async (albumId: string) => {
 			const resp = await get<IApiResponse<IPhoto[]>>({
 				endpoint: IApiEndpoint.GET_PHOTOS_BY_ALBUM_ID,
-				queryParams: { id: albumId },
+				queryParams: { albumId },
 			});
 
 			return resp.data;
