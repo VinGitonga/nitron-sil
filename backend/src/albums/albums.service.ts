@@ -13,15 +13,103 @@ export class AlbumsService {
 	}
 
 	async getAlbums() {
-		return this.albumModel.find();
+		// Return all albums and also the count of photos in each album
+		return this.albumModel.aggregate([
+			{
+				$lookup: {
+					from: "photos",
+					localField: "_id",
+					foreignField: "album",
+					as: "photos",
+				},
+			},
+			{
+				$lookup: {
+					from: "users",
+					localField: "user",
+					foreignField: "_id",
+					as: "user",
+				},
+			},
+			{
+				$project: {
+					_id: 1,
+					title: 1,
+					user: 1,
+					photoCount: { $size: "$photos" },
+				},
+			},
+		]);
 	}
 
 	async getAlbumById(id: string) {
-		return this.albumModel.findById(id);
+		// Return the album and also the count of photos in the album
+		return this.albumModel.aggregate([
+			{
+				$match: {
+					_id: id,
+				},
+			},
+			{
+				$lookup: {
+					from: "photos",
+					localField: "_id",
+					foreignField: "album",
+					as: "photos",
+				},
+			},
+			{
+				$lookup: {
+					from: "users",
+					localField: "user",
+					foreignField: "_id",
+					as: "user",
+				},
+			},
+			{
+				$project: {
+					_id: 1,
+					title: 1,
+					user: 1,
+					photoCount: { $size: "$photos" },
+				},
+			},
+		]);
 	}
 
 	async getAlbumsByUserId(userId: string) {
-		return this.albumModel.find({ user: userId });
+		// Return all albums and also the count of photos in each album
+		return this.albumModel.aggregate([
+			{
+				$match: {
+					user: userId,
+				},
+			},
+			{
+				$lookup: {
+					from: "photos",
+					localField: "_id",
+					foreignField: "album",
+					as: "photos",
+				},
+			},
+			{
+				$lookup: {
+					from: "users",
+					localField: "user",
+					foreignField: "_id",
+					as: "user",
+				},
+			},
+			{
+				$project: {
+					_id: 1,
+					title: 1,
+					user: 1,
+					photoCount: { $size: "$photos" },
+				},
+			},
+		]);
 	}
 
 	async updateAlbumTitle(id: string, title: string) {

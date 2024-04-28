@@ -27,6 +27,26 @@ export class UsersService {
 	}
 
 	async getAllUsers() {
-		return this.userModel.find();
+		// Return all users and also the count of albums and photos for each user
+		return this.userModel.aggregate([
+			{
+				$lookup: {
+					from: "albums",
+					localField: "_id",
+					foreignField: "user",
+					as: "albums",
+				},
+			},
+
+			{
+				$project: {
+					_id: 1,
+					email: 1,
+					name: 1,
+					username: 1,
+					albumCount: { $size: "$albums" },
+				},
+			},
+		]);
 	}
 }

@@ -58,7 +58,7 @@ export class AlbumsController {
 			res.status(HttpStatus.OK).json({
 				status: "success",
 				msg: "Album found",
-				data: album.toJSON(),
+				data: album?.[0]?.toJSON() ?? {},
 			});
 		} catch (err) {
 			throw new BadRequestException({
