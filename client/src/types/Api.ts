@@ -14,6 +14,7 @@ export const enum IApiEndpoint {
 	CREATE_USER = "users/create",
     GET_USER_BY_EMAIL = "users/get/by-email",
     GET_USER_BY_ID = "users/get/by-id",
+	GET_ALL_USERS = "users/get/all",
     
 }
 

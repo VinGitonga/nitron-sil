@@ -1,18 +1,26 @@
 import Image from "@/components/images/Image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
 
 const NewAlbums = () => {
 	return (
 		<div>
-			<div className="">
-				<h1 className="font-bold text-xl">Albums</h1>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo</p>
+			<div className="flex items-center justify-between">
+				<div className="">
+					<h1 className="font-bold text-xl">Albums</h1>
+					<div className="w-full md:w-[75%]">
+						<p>List of all albums. This page is just a demo to show how the API works. The data is fetched from the backend and displayed here.</p>
+					</div>
+				</div>
+				<Button className="rounded-full">Add Album</Button>
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-2 mt-6 gap-x-5 gap-y-8">
 				{[...Array(10)].map((_, i) => (
-                    <AlbumCardItem key={i} />
-                ))}
+					<AlbumCardItem key={i} />
+				))}
 			</div>
 		</div>
 	);
@@ -22,7 +30,14 @@ const AlbumCardItem = () => {
 	return (
 		<div className="max-w-lg border border-solid border-gray-200 rounded-2xl transition-all duration-500 ">
 			<div className="block overflow-hidden">
-				<Image srcList={["https://pagedone.io/asset/uploads/1695365240.png"]} alt="Card image" className="w-full" />
+				<Suspense
+					fallback={
+						<div className="flex items-center justify-center h-40">
+							<Loader2 className="w-10 h-10 animate-spin" />
+						</div>
+					}>
+					<Image srcList={["https://pagedone.io/asset/uploads/1695365240.png"]} alt="Card image" className="w-full" />
+				</Suspense>
 			</div>
 			<div className="px-4 py-4">
 				<h2 className="text-lg font-semibold">I Built A Successful Blog In One Year</h2>

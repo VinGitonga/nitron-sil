@@ -45,6 +45,8 @@ export class UsersService {
 					name: 1,
 					username: 1,
 					albumCount: { $size: "$albums" },
+					createdAt: 1,
+					updatedAt: 1,
 				},
 			},
 		]);

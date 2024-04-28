@@ -5,6 +5,7 @@ export interface UserDocument {
 	email: string;
 	createdAt: string;
 	updatedAt: string;
+	albumCount?: number;
 }
 
 export interface IUser extends UserDocument {

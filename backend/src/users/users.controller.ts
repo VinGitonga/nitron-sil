@@ -79,7 +79,7 @@ export class UsersController {
 			res.status(HttpStatus.OK).json({
 				status: "success",
 				msg: "Users found",
-				data: users.map((user) => user.toJSON()),
+				data: users,
 			});
 		} catch (err) {
 			throw new BadRequestException({
