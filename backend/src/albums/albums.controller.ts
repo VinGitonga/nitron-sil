@@ -36,7 +36,7 @@ export class AlbumsController {
 			res.status(HttpStatus.OK).json({
 				status: "success",
 				msg: "Albums found",
-				data: albums.map((album) => album.toJSON()),
+				data: albums,
 			});
 		} catch (err) {
 			throw new BadRequestException({
@@ -76,7 +76,7 @@ export class AlbumsController {
 			res.status(HttpStatus.OK).json({
 				status: "success",
 				msg: "Albums found",
-				data: albums.map((album) => album.toJSON()),
+				data: albums,
 			});
 		} catch (err) {
 			throw new BadRequestException({

@@ -1,11 +1,37 @@
 import Image from "@/components/images/Image";
+import NewAlbumModal from "@/components/modals/NewAlbumModal";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import useAlbumUtils from "@/hooks/useAlbumUtils";
+import { IAlbum } from "@/types/Album";
 import { Loader2 } from "lucide-react";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+interface AlbumCardItemProps {
+	album: IAlbum;
+	idx?: number;
+}
 
 const NewAlbums = () => {
+	const [albums, setAlbums] = useState<IAlbum[]>([]);
+
+	const { getAlbums } = useAlbumUtils();
+
+	async function fetchAlbums() {
+		getAlbums()
+			.then((resp) => {
+				if (resp?.status === "success") setAlbums(resp.data!);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	}
+
+	useEffect(() => {
+		fetchAlbums();
+	}, []);
+
 	return (
 		<div>
 			<div className="flex items-center justify-between">
@@ -15,18 +41,25 @@ const NewAlbums = () => {
 						<p>List of all albums. This page is just a demo to show how the API works. The data is fetched from the backend and displayed here.</p>
 					</div>
 				</div>
-				<Button className="rounded-full">Add Album</Button>
+				<NewAlbumModal refresh={fetchAlbums} />
 			</div>
-			<div className="grid grid-cols-1 md:grid-cols-2 mt-6 gap-x-5 gap-y-8">
-				{[...Array(10)].map((_, i) => (
-					<AlbumCardItem key={i} />
-				))}
-			</div>
+			{albums?.length === 0 && (
+				<div className="flex items-center justify-center h-96">
+					<Loader2 className="w-10 h-10 animate-spin" />
+				</div>
+			)}
+			{albums?.length > 0 && (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-8 mt-6">
+					{albums.map((album, idx) => (
+						<AlbumCardItem key={album._id} album={album} idx={idx} />
+					))}
+				</div>
+			)}
 		</div>
 	);
 };
 
-const AlbumCardItem = () => {
+const AlbumCardItem = ({ album, idx }: AlbumCardItemProps) => {
 	return (
 		<div className="max-w-lg border border-solid border-gray-200 rounded-2xl transition-all duration-500 ">
 			<div className="block overflow-hidden">
@@ -36,21 +69,33 @@ const AlbumCardItem = () => {
 							<Loader2 className="w-10 h-10 animate-spin" />
 						</div>
 					}>
-					<Image srcList={["https://pagedone.io/asset/uploads/1695365240.png"]} alt="Card image" className="w-full" />
+					<Link to={`/home/album/${album._id}`}>
+						<Image srcList={[`https://source.unsplash.com/random?random&${idx}`, "https://pagedone.io/asset/uploads/1695365240.png"]} alt="Card image" className="w-full rounded-t-2xl max-h-80" />
+					</Link>
 				</Suspense>
 			</div>
 			<div className="px-4 py-4">
-				<h2 className="text-lg font-semibold">I Built A Successful Blog In One Year</h2>
+				<Link to={`/home/album/${album._id}`}>
+					<h2 className="text-lg font-semibold hover:underline">{album.title}</h2>
+				</Link>
 				<div className="mt-5 flex items-center justify-between">
 					<div className="flex items-center space-x-2">
-						<Avatar className="w-16 h-16 rounded-full">
-							<AvatarImage src={"https://images.unsplash.com/photo-1666795599746-0f62dfa29a07?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80)"} />
+						<Avatar className="w-16 h-16 rounded-full border">
+							<AvatarImage src={`https://api.dicebear.com/8.x/adventurer/svg?seed=${album?.user?.username}`} />
 							<AvatarFallback className="text-black">{"JD"}</AvatarFallback>
 						</Avatar>
-						<p className="text-base font-bold transition-all duration-500 leading-5">John Doe</p>
-						<p className="font-normal text-sm text-gray-500">21 May 2021</p>
+						<Link to={`/home/user/${album.user._id}`}>
+							<p className="text-base font-bold transition-all duration-500 leading-5 hover:underline">@{album.user.username}</p>
+						</Link>
+						<p className="font-normal text-sm text-gray-500">
+							{new Date(album.createdAt).toLocaleDateString("en-US", {
+								year: "numeric",
+								month: "short",
+								day: "numeric",
+							})}
+						</p>
 					</div>
-					<Badge>10 Photos</Badge>
+					<Badge>{album.photoCount} photos</Badge>
 				</div>
 			</div>
 		</div>

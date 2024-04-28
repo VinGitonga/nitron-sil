@@ -32,11 +32,23 @@ export class AlbumsService {
 				},
 			},
 			{
+				$addFields: {
+					user: { $arrayElemAt: ["$user", 0] },
+				},
+			},
+			{
+				$sort: {
+					createdAt: -1,
+				},
+			},
+			{
 				$project: {
 					_id: 1,
 					title: 1,
 					user: 1,
 					photoCount: { $size: "$photos" },
+					createdAt: 1,
+					updateAt: 1,
 				},
 			},
 		]);
@@ -64,6 +76,11 @@ export class AlbumsService {
 					localField: "user",
 					foreignField: "_id",
 					as: "user",
+				},
+			},
+			{
+				$addFields: {
+					user: { $arrayElemAt: ["$user", 0] },
 				},
 			},
 			{
@@ -99,6 +116,16 @@ export class AlbumsService {
 					localField: "user",
 					foreignField: "_id",
 					as: "user",
+				},
+			},
+			{
+				$addFields: {
+					user: { $arrayElemAt: ["$user", 0] },
+				},
+			},
+			{
+				$sort: {
+					createdAt: -1,
 				},
 			},
 			{

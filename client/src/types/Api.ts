@@ -12,10 +12,16 @@ export type IApiResponse<T = any> = IApiSuccessResponse<T> | IApiErrorResponse;
 
 export const enum IApiEndpoint {
 	CREATE_USER = "users/create",
-    GET_USER_BY_EMAIL = "users/get/by-email",
-    GET_USER_BY_ID = "users/get/by-id",
+	GET_USER_BY_EMAIL = "users/get/by-email",
+	GET_USER_BY_ID = "users/get/by-id",
 	GET_ALL_USERS = "users/get/all",
-    
+
+	// Albums
+	CREATE_ALBUM = "albums/create",
+	GET_ALBUMS = "albums/get/all",
+	GET_ALBUM_BY_ID = "albums/get/by-id",
+	GET_ALBUM_BY_USER_ID = "albums/get/by-user-id",
+	UPDATE_ALBUM = "albums/update",
 }
 
 export interface IMethodParams {

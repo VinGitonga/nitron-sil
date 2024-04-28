@@ -5,6 +5,7 @@ import NewHome from "./pages/NewHome";
 import Photos from "./pages/Photos";
 import NewAlbums from "./pages/NewAlbums";
 import UserProfile from "./pages/UserProfile";
+import AlbumProfile from "./pages/AlbumProfile";
 
 /**
  * setup the application routes
@@ -31,9 +32,13 @@ const router = createBrowserRouter([
 				element: <NewAlbums />,
 			},
 			{
-				path: "user-profile/:id",
+				path: "user/:id",
 				element: <UserProfile />,
 			},
+			{
+				path: "album/:id",
+				element: <AlbumProfile />,
+			}
 		],
 	},
 ]);

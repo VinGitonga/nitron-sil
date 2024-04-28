@@ -2,9 +2,10 @@ import Image from "@/components/images/Image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useUserUtils from "@/hooks/useUserUtils";
 import { UserDocument } from "@/types/User";
+import { getInitials } from "@/utils";
 import { Loader2, SquareLibraryIcon } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type UserCardItemProps = {
 	user: UserDocument;
@@ -70,7 +71,7 @@ const UserCardItem = ({ user, idx }: UserCardItemProps) => {
 			<div className="-mt-10 ml-5">
 				<Avatar className="w-20 h-20 rounded-full border">
 					<AvatarImage src={`https://api.dicebear.com/8.x/adventurer/svg?seed=${user?.username}`} />
-					<AvatarFallback className="text-black">{"JD"}</AvatarFallback>
+					<AvatarFallback className="text-black">{getInitials(user?.name ?? "John Doe")}</AvatarFallback>
 				</Avatar>
 			</div>
 			<div className="p-4 space-y-3">
@@ -80,7 +81,7 @@ const UserCardItem = ({ user, idx }: UserCardItemProps) => {
 					<SquareLibraryIcon />
 					<p className="text-sm font-normal text-gray-500 transition-all duration-500 leading-5">{user.albumCount} Albums</p>
 				</div>
-				<button className="bg-indigo-600 shadow-sm rounded-full py-2 px-5 text-xs text-white font-semibold" onClick={() => navigate(`/home/user-profile/${user._id}`)}>
+				<button className="bg-indigo-600 shadow-sm rounded-full py-2 px-5 text-xs text-white font-semibold" onClick={() => navigate(`/home/user/${user._id}`)}>
 					View Profile
 				</button>
 			</div>
