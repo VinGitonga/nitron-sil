@@ -10,6 +10,7 @@ import UploadImageModal from "@/components/modals/UploadImageModal";
 import usePhotoUtils from "@/hooks/usePhotoUtils";
 import { IPhoto } from "@/types/Photo";
 import PhotoCardItem from "@/components/app-photos/PhotoCardItem";
+import { Helmet } from "react-helmet-async";
 
 const AlbumProfile = () => {
 	const [albumInfo, setAlbumInfo] = useState<IAlbum | null>(null);
@@ -57,6 +58,11 @@ const AlbumProfile = () => {
 
 	return (
 		<>
+			<Helmet>
+				<title>
+					{albumInfo?.title} - {albumInfo?.user?.username} - Nitron
+				</title>
+			</Helmet>
 			<div className="w-full border border-solid border-gray-200 rounded-2xl transition-all duration-500">
 				{albumInfo ? (
 					<>
