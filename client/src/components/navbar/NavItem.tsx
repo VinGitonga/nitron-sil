@@ -21,7 +21,7 @@ const NavItem: FC<NavItemProps> = ({ href, text }) => {
 		return false;
 	}, [href, location.pathname]);
 	return (
-		<Link to={href ? `/${href}` : "/"} className={cn("text-sm font-medium transition-colors hover:text-primary", selected ? "text-primary font-semibold" : "text-muted-foreground")}>
+		<Link to={href ? `/${href}` : "/"} className={cn("text-lg font-medium transition-colors hover:text-primary", selected ? "text-primary font-semibold" : "text-muted-foreground")}>
 			{text}
 		</Link>
 	);

@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import GetStarted from "./pages/GetStarted";
-import HomeLayout from "./layouts/HomeLayout";
-import Home from "./pages/Home";
+import NewLandingPage from "./pages/NewLandingPage";
+import AppLayout from "./layouts/AppLayout";
+import NewHome from "./pages/NewHome";
+import Photos from "./pages/Photos";
+import NewAlbums from "./pages/NewAlbums";
 
 /**
  * setup the application routes
@@ -10,19 +11,23 @@ import Home from "./pages/Home";
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <LandingPage />,
+		element: <NewLandingPage />,
 	},
 	{
-		path: "/get-started",
-		element: <GetStarted />,
-	},
-	{
-		path: "/home",
-		element: <HomeLayout />,
+		path: "home",
+		element: <AppLayout />,
 		children: [
 			{
 				path: "",
-				element: <Home />,
+				element: <NewHome />,
+			},
+			{
+				path: "photos",
+				element: <Photos />,
+			},
+			{
+				path: "albums",
+				element: <NewAlbums />,
 			},
 		],
 	},

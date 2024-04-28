@@ -1,7 +1,10 @@
+import { useAuthStore } from "@/hooks/useAuthStore";
 import { useState } from "react";
 
 export default function LandingPage() {
 	const [state, setState] = useState<boolean>(false);
+
+	const { user } = useAuthStore();
 
 	const navigation = [
 		{ title: "Partners", path: "/" },
@@ -37,8 +40,10 @@ export default function LandingPage() {
 						))}
 					</div>
 					<li className="order-2 py-5 md:py-0">
-						<a href="/get-started" className="py-2 px-5 rounded-lg font-medium text-white text-center bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 duration-150 block md:py-3 md:inline">
-							Get started
+						<a
+							href={user ? "/home" : "/get-started"}
+							className="py-2 px-5 rounded-lg font-medium text-white text-center bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 duration-150 block md:py-3 md:inline">
+							{user ? "Go to Dashboard" : "Get Started"}
 						</a>
 					</li>
 				</ul>
@@ -50,8 +55,10 @@ export default function LandingPage() {
 						<h2 className="text-4xl text-gray-800 font-extrabold md:text-5xl">We help startups to grow and make money</h2>
 						<p>Sed ut perspiciatis unde omnis iste natus voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
 						<div className="items-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
-							<a href="/get-started" className="block py-2 px-4 text-center text-white font-medium bg-indigo-600 duration-150 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none">
-								Let's get started
+							<a
+								href={user ? "/home" : "/get-started"}
+								className="block py-2 px-4 text-center text-white font-medium bg-indigo-600 duration-150 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none">
+								{user ? "Dashboard" : "Let's get started"}
 							</a>
 							<a href="/" className="flex items-center justify-center gap-x-2 py-2 px-4 text-gray-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex">
 								Get access
