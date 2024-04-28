@@ -1,6 +1,7 @@
 import Image from "@/components/images/Image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { SquareLibraryIcon } from "lucide-react";
+import { Loader2, SquareLibraryIcon } from "lucide-react";
+import { Suspense } from "react";
 
 const NewHome = () => {
 	return (
@@ -22,7 +23,9 @@ const UserCardItem = () => {
 	return (
 		<div className="max-w-xs border border-solid border-gray-200 rounded-2xl transition-all duration-500 ">
 			<div className="block overflow-hidden">
-				<Image srcList={["https://pagedone.io/asset/uploads/1695365240.png"]} alt="Card image" />
+				<Suspense fallback={<Loader2 className="w-10 h-10 animate-spin" />}>
+					<Image srcList={["https://pagedone.io/asset/uploads/1695365240.png"]} alt="Card image" />
+				</Suspense>
 			</div>
 			<div className="-mt-10 ml-5">
 				<Avatar className="w-20 h-20 rounded-full">
@@ -35,7 +38,7 @@ const UserCardItem = () => {
 				<p className="text-sm font-normal text-gray-500 transition-all duration-500 leading-5">christina@gmail.com</p>
 				<div className="flex items-center space-x-2">
 					<SquareLibraryIcon />
-                    <p className="text-sm font-normal text-gray-500 transition-all duration-500 leading-5">10 Albums</p>
+					<p className="text-sm font-normal text-gray-500 transition-all duration-500 leading-5">10 Albums</p>
 				</div>
 				<button className="bg-indigo-600 shadow-sm rounded-full py-2 px-5 text-xs text-white font-semibold">View Profile</button>
 			</div>

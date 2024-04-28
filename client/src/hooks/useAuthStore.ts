@@ -1,10 +1,10 @@
-import { User } from "firebase/auth";
+import { IUser } from "@/types/User";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 interface IAuthStore {
-	user: User | null;
-	setUser: (user: User | null) => void;
+	user: IUser | null;
+	setUser: (user: IUser | null) => void;
 	clearData: () => void;
 }
 

@@ -10,10 +10,6 @@ import { signOut } from "firebase/auth";
 import { firebaseAuth } from "@/lib/firebase";
 import { getInitials } from "@/utils";
 
-const getFirstName = (name: string) => {
-	return name.split(" ")[0];
-};
-
 type SidebarItemProps = {
 	icon: React.ReactNode;
 	text: string;
@@ -31,7 +27,6 @@ const AppSidebar = () => {
 		});
 	};
 
-	console.log(user);
 	return (
 		<aside className="h-screen">
 			<nav className="h-full flex flex-col bg-white w-[calc(15rem)] md:border-r overflow-y-scroll">
@@ -65,9 +60,9 @@ const AppSidebar = () => {
 								<div className="flex items-center space-x-1">
 									<Avatar className="w-10 h-10 rounded-full">
 										<AvatarImage src={user?.photoURL ?? "https://api.dicebear.com/8.x/adventurer/svg?seed=Fluffy"} />
-										<AvatarFallback className="text-black">{getInitials(user?.displayName ?? "John Doe")}</AvatarFallback>
+										<AvatarFallback className="text-black">{getInitials(user?.name ?? "John Doe")}</AvatarFallback>
 									</Avatar>
-									<p className="truncate">{getFirstName(user?.displayName ?? "John Doe")}</p>
+									<p className="truncate capitalize">{user?.username}</p>
 								</div>
 								<Button size={"icon"} variant={"ghost"} className="rounded-full" onClick={doLogout}>
 									<LogOutIcon />

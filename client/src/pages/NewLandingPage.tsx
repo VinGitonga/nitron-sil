@@ -1,8 +1,10 @@
 import GetStartedButtonDropdown from "@/components/dropdowns/GetStartedButtonDropdown";
 import Image from "@/components/images/Image";
+import UpdateUsernameModal from "@/components/modals/UpdateUsernameModal";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/hooks/useAuthStore";
-import { FC } from "react";
+import { Loader2 } from "lucide-react";
+import { FC, Suspense } from "react";
 import { SiMagic } from "react-icons/si";
 import { Link } from "react-router-dom";
 
@@ -17,6 +19,7 @@ const NewLandingPage = () => {
 				<NavSection />
 			</div>
 			<HeroSection />
+			<UpdateUsernameModal />
 		</div>
 	);
 };
@@ -79,7 +82,9 @@ const HeroSection = () => {
 					</div>
 				</div>
 				<div className="md:col-span-3">
-					<Image srcList={["/images/vintage-photos.jpg"]} alt="" className="rounded-3xl h-[600px]" />
+					<Suspense fallback={<Loader2 className="w-10 h-10 animate-spin" />}>
+						<Image srcList={["/images/vintage-photos.jpg"]} alt="" className="rounded-3xl h-[600px]" />
+					</Suspense>
 				</div>
 			</div>
 		</div>
