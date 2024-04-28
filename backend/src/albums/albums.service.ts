@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Album } from "./schemas/album.schema";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { CreateAlbumDto } from "./dto/create-album.dto";
 
 @Injectable()
@@ -48,7 +48,7 @@ export class AlbumsService {
 					user: 1,
 					photoCount: { $size: "$photos" },
 					createdAt: 1,
-					updateAt: 1,
+					updatedAt: 1,
 				},
 			},
 		]);
@@ -59,7 +59,7 @@ export class AlbumsService {
 		return this.albumModel.aggregate([
 			{
 				$match: {
-					_id: id,
+					_id: new mongoose.Types.ObjectId(id),
 				},
 			},
 			{
@@ -89,6 +89,8 @@ export class AlbumsService {
 					title: 1,
 					user: 1,
 					photoCount: { $size: "$photos" },
+					createdAt: 1,
+					updatedAt: 1,
 				},
 			},
 		]);
@@ -134,6 +136,8 @@ export class AlbumsService {
 					title: 1,
 					user: 1,
 					photoCount: { $size: "$photos" },
+					createdAt: 1,
+					updatedAt: 1,
 				},
 			},
 		]);
