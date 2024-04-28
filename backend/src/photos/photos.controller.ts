@@ -36,7 +36,7 @@ export class PhotosController {
 			res.status(200).json({
 				status: "success",
 				msg: "Photos found",
-				data: photos.map((photo) => photo.toJSON()),
+				data: photos,
 			});
 		} catch (err) {
 			throw new BadRequestException({
@@ -76,7 +76,7 @@ export class PhotosController {
 			res.status(200).json({
 				status: "success",
 				msg: "Photos found",
-				data: photos.map((photo) => photo.toJSON()),
+				data: photos,
 			});
 		} catch (err) {
 			throw new BadRequestException({

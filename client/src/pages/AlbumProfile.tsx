@@ -68,7 +68,7 @@ const AlbumProfile = () => {
 							</div>
 							<div className="flex items-center space-x-2">
 								<Badge>{albumInfo.photoCount} photos</Badge>
-								<UploadImageModal />
+								<UploadImageModal albumId={id} refresh={fetchAlbum} />
 							</div>
 						</div>
 					</div>

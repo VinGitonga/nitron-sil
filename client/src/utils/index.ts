@@ -7,3 +7,7 @@ export function getInitials(name: string) {
 		return (splitName[0][0] + splitName[splitName.length - 1][0]).toUpperCase();
 	}
 }
+
+export function getFileExtension(filename: string) {
+	return filename.split(".").pop();
+}

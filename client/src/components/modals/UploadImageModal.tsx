@@ -1,8 +1,7 @@
 import { ChangeEvent, useDeferredValue, useRef, useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
-import { DialogTrigger } from "@radix-ui/react-dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
-import { CloudUploadIcon, TrashIcon } from "lucide-react";
+import { CloudUploadIcon, Loader2, TrashIcon } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import AppInput from "../app-forms/AppInput";
@@ -11,8 +10,18 @@ import { getFilenameWithoutExtension, getFileSize } from "@/lib/utils";
 import { Progress } from "../ui/progress";
 import isURL from "validator/lib/isURL";
 import { toast } from "sonner";
+import usePhotoUtils from "@/hooks/usePhotoUtils";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { firebaseStorage } from "@/lib/firebase";
+import { nanoid } from "nanoid";
+import { getFileExtension } from "@/utils";
 
-const UploadImageModal = () => {
+interface UploadImageModalProps {
+	albumId: string;
+	refresh?: VoidFunction;
+}
+
+const UploadImageModal = ({ albumId, refresh }: UploadImageModalProps) => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [uploadType, setUploadType] = useState<"url" | "upload">("url");
 
@@ -26,7 +35,11 @@ const UploadImageModal = () => {
 	const [photoImage, setPhotoImage] = useState<ArrayBuffer | string | null>(null);
 	const [uploadPhotoTitle, setUploadPhotoTitle] = useState<string>("");
 	const [uploadProgress, setUploadProgress] = useState<number>(80);
-	const [isUploading, setIsUploading] = useState<boolean>(true);
+	const [isUploading, setIsUploading] = useState<boolean>(false);
+
+	const [loading, setLoading] = useState<boolean>(false);
+
+	const { savePhoto } = usePhotoUtils();
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files.length > 0) {
@@ -64,6 +77,100 @@ const UploadImageModal = () => {
 				toast.error("Photo title is required");
 				return;
 			}
+
+			// upload photo from url
+			setLoading(true);
+			try {
+				const resp = await savePhoto({
+					albumId,
+					title: photoTitle,
+					url: photoUrl,
+				});
+
+				if (resp.status === "success") {
+					toast.success("Photo uploaded successfully");
+					setPhotoUrl("");
+					setPhotoTitle("");
+					refresh?.();
+					setOpen(false);
+				} else {
+					toast.error("Failed to upload photo");
+				}
+			} catch (err) {
+				toast.error("Failed to upload photo");
+			} finally {
+				setLoading(false);
+			}
+		} else {
+			// upload photo from file
+
+			// check if the title is not empty
+			if (!uploadPhotoTitle) {
+				toast.error("Photo title is required");
+				return;
+			}
+
+			// check if the image is selected
+			if (!photoImageData) {
+				toast.error("Please select an image to upload");
+				return;
+			}
+
+			// get blob from uri
+			const blob = new Blob([photoImageData as BlobPart], { type: photoImageData.type });
+
+			// upload photo from file and ensure the unique filename by adding nanoid
+			const firebaseStorageRef = ref(firebaseStorage, `photos/${albumId}/${getFilenameWithoutExtension(photoImageData.name)}-${nanoid(8)}.${getFileExtension(photoImageData.name)}`);
+
+			setIsUploading(true);
+
+			const uploadTask = uploadBytesResumable(firebaseStorageRef, blob, {
+				contentType: blob.type,
+			});
+
+			uploadTask.on(
+				"state_changed",
+				(snapshot) => {
+					let progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
+					setUploadProgress(progress);
+				},
+				(_error) => {
+					console.error(_error);
+					toast.error("Failed to upload photo");
+					setIsUploading(false);
+				},
+				async () => {
+					const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+					const info = {
+						albumId,
+						title: uploadPhotoTitle,
+						url: downloadURL,
+					};
+
+					setLoading(true);
+					try {
+						const resp = await savePhoto(info);
+
+						if (resp.status === "success") {
+							toast.success("Photo uploaded successfully");
+							setPhotoImageData(null);
+							setPhotoImage(null);
+							setUploadPhotoTitle("");
+							refresh?.();
+							setOpen(false);
+						} else {
+							toast.error("Failed to upload photo");
+						}
+					} catch (err) {
+						toast.error("Failed to upload photo");
+					} finally {
+						setIsUploading(false);
+						setLoading(false);
+					}
+				}
+			);
 		}
 	};
 
@@ -136,7 +243,10 @@ const UploadImageModal = () => {
 					)}
 				</div>
 				<DialogFooter>
-					<Button>Submit</Button>
+					<Button disabled={isUploading || loading} onClick={uploadPhoto}>
+						{loading && <Loader2 className="w-6 h-6 mr-2 animate-spin" />}
+						{loading ? "Uploading..." : "Upload"}
+					</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
