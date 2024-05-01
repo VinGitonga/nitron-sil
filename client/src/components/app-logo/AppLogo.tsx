@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const AppLogo = () => {
 	return (
 		<Link to={"/"}>
-			<div className="flex items-center space-x-2">
+			<div className="flex items-center space-x-2" data-cy="app-logo">
 				<div className="p-2 bg-[#ff9900] rounded-full">
 					<SiMagic />
 				</div>
