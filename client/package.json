@@ -45,6 +45,8 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@serwist/vite": "^9.0.2",
+    "@serwist/window": "^9.0.2",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
@@ -57,6 +59,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.4.38",
+    "serwist": "^9.0.2",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.10"
