@@ -68,7 +68,6 @@ export class PhotosService {
 	}
 
 	async getPhotosByAlbumId(albumId: string) {
-		console.log(albumId);
 		return this.photoModel.aggregate([
 			{
 				$match: {
