@@ -61,7 +61,7 @@ const HeroSection = () => {
 	return (
 		<div className="mt-10">
 			<div className="grid grid-cols-1 md:grid-cols-8 gap-5">
-				<div className="md:col-span-5">
+				<div className="col-auto md:col-span-5">
 					<h1 className="text-[60px] font-bold">The perfect place to backup your memories and share them with your loved ones.</h1>
 					<div className="mt-10">
 						<h3 className="text-lg">We provide the best cloud storage for your photos and videos. Our platform is designed to help you store your memories and share them with your loved ones.</h3>
@@ -76,7 +76,7 @@ const HeroSection = () => {
 						)}
 					</div>
 				</div>
-				<div className="md:col-span-3">
+				<div className="col-auto md:col-span-3">
 					<Suspense fallback={<Loader2 className="w-10 h-10 animate-spin" />}>
 						<Image srcList={["/images/vintage-photos.jpg"]} alt="" className="rounded-3xl h-[600px]" />
 					</Suspense>
