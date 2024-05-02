@@ -96,7 +96,7 @@ cd client
 yarn dev
 ```
 
-9. Open your browser and navigate to `http://localhost:3000`
+9. Open your browser and navigate to `http://localhost:5173`
 
 10. Sign in with your Google account to start using the application
 
