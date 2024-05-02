@@ -17,11 +17,19 @@ describe("template spec", () => {
 		cy.get("[data-cy=logout]").click({ multiple: true, force: true });
 	});
 
-  it("Check if its listing users", () => {
-    cy.loginByTestingEmail()
+	it("Check if its listing users", () => {
+		cy.loginByTestingEmail();
 
 		cy.get("button").contains("Go to App").click({ multiple: true, force: true });
 
-    cy.get("[data-cy=homepage-user-items]").children().should("have.length.at.least", 1)
-  })
+		cy.get("[data-cy=homepage-user-items]").children().should("have.length.at.least", 1);
+	});
+
+	it("Select a user and navigate to user profile", () => {
+		cy.loginByTestingEmail();
+
+		cy.get("button").contains("Go to App").click({ multiple: true, force: true });
+
+		cy.get("[data-cy=homepage-user-items]").eq(0).get("[data-cy=homepage-user-item]").get("button").contains("View Profile").click();
+	});
 });
