@@ -90,7 +90,7 @@ const UserProfile = () => {
 							<CardHeader>
 								<CardTitle>
 									Albums
-									<span className="text-sm text-gray-500"> ({albums.length})</span>
+									<span className="text-sm text-gray-500" data-cy="user-profile-album-count"> ({albums.length})</span>
 								</CardTitle>
 							</CardHeader>
 						</Card>

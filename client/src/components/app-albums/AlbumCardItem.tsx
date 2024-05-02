@@ -13,7 +13,7 @@ interface AlbumCardItemProps {
 
 const AlbumCardItem = ({ album, idx }: AlbumCardItemProps) => {
 	return (
-		<div className="max-w-lg border border-solid border-gray-200 rounded-2xl transition-all duration-500 ">
+		<div className="max-w-lg border border-solid border-gray-200 rounded-2xl transition-all duration-500 " data-cy="album-card-item">
 			<div className="block overflow-hidden">
 				<Suspense
 					fallback={
