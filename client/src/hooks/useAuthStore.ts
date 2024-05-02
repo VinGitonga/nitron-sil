@@ -26,3 +26,10 @@ export const useAuthStore = create(
 		)
 	)
 );
+
+// Expose the store to Cypress for testing purposes
+// @ts-ignore
+if(window.Cypress){
+	// @ts-ignore
+	window.authStore = useAuthStore;
+}

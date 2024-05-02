@@ -42,7 +42,7 @@ const NewHome = () => {
 				<p>List of all users and their albums. This page is just a demo to show how the API works. The data is fetched from the backend and displayed here.</p>
 			</div>
 			{users?.length && (
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-10 mt-6 place-items-center md:place-items-start">
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-10 mt-6 place-items-center md:place-items-start" data-cy="homepage-user-items">
 					{users.map((user, idx) => (
 						<UserCardItem key={user._id} user={user} idx={idx} />
 					))}
@@ -61,7 +61,7 @@ const NewHome = () => {
 const UserCardItem = ({ user, idx }: UserCardItemProps) => {
 	const navigate = useNavigate();
 	return (
-		<div className="max-w-xs border border-solid border-gray-200 rounded-2xl transition-all duration-500 ">
+		<div className="max-w-xs border border-solid border-gray-200 rounded-2xl transition-all duration-500" data-cy="homepage-user-item">
 			<div className="block overflow-hidden">
 				<Suspense
 					fallback={

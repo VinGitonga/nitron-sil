@@ -70,7 +70,7 @@ const HeroSection = () => {
 						{!user ? (
 							<GetStartedButtonDropdown />
 						) : (
-							<Link to={"/home"}>
+							<Link to={"/home"} data-cy={"go-to-dashboard"}>
 								<Button className="rounded-full">Go to App</Button>
 							</Link>
 						)}

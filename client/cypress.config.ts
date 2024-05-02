@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+import "dotenv/config";
 
 export default defineConfig({
 	e2e: {
@@ -7,4 +8,10 @@ export default defineConfig({
 			// implement node event listeners here
 		},
 	},
+	env: {
+		// @ts-expect-error
+		testingEmail: process.env.TESTING_USER_EMAIL,
+		// @ts-expect-error
+		apiUrl: process.env.VITE_API_BASE_URL,
+	}
 });
