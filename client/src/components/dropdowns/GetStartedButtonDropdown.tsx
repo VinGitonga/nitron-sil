@@ -53,20 +53,20 @@ function GetStartedButtonDropdown() {
 	};
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
+			<DropdownMenuTrigger data-cy="get-started-button" asChild>
 				<Button className="rounded-full">Get Started</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-72 font-inconsolata">
+			<DropdownMenuContent className="w-72 font-inconsolata" data-cy="get-started-dropdown">
 				<DropdownMenuLabel>Get Started</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					<DropdownMenuItem>
+					<DropdownMenuItem data-cy="get-started-dropdown-sign-in-with-google">
 						<button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100" onClick={onClickSignIn}>
 							<FcGoogle className="w-5 h-5" />
 							Continue with Google
 						</button>
 					</DropdownMenuItem>
-					<DropdownMenuItem>
+					<DropdownMenuItem data-cy="get-started-dropdown-sign-in-with-github">
 						<button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
 							<FaGithub className="w-5 h-5" />
 							Continue with GitHub

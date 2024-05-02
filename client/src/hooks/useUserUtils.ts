@@ -36,7 +36,16 @@ const useUserUtils = () => {
 		return resp.data;
 	}, [get]);
 
-	return { getUserByEmail, saveUserDetails, getAllUsers };
+	const getUserById = useCallback(
+		async (id: string) => {
+			const resp = await get<IApiResponse<UserDocument>>({ endpoint: IApiEndpoint.GET_USER_BY_ID, queryParams: { id } });
+
+			return resp.data;
+		},
+		[get]
+	);
+
+	return { getUserByEmail, saveUserDetails, getAllUsers, getUserById };
 };
 
 export default useUserUtils;

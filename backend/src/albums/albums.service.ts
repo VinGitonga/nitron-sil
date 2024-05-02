@@ -101,7 +101,7 @@ export class AlbumsService {
 		return this.albumModel.aggregate([
 			{
 				$match: {
-					user: userId,
+					user: new mongoose.Types.ObjectId(userId),
 				},
 			},
 			{

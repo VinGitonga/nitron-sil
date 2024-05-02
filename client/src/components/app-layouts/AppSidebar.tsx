@@ -64,7 +64,7 @@ const AppSidebar = () => {
 									</Avatar>
 									<p className="truncate capitalize">{user?.username}</p>
 								</div>
-								<Button size={"icon"} variant={"ghost"} className="rounded-full" onClick={doLogout}>
+								<Button size={"icon"} variant={"ghost"} className="rounded-full" onClick={doLogout} data-cy={"logout"}>
 									<LogOutIcon />
 								</Button>
 							</div>

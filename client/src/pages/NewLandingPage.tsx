@@ -1,3 +1,4 @@
+import AppLogo from "@/components/app-logo/AppLogo";
 import GetStartedButtonDropdown from "@/components/dropdowns/GetStartedButtonDropdown";
 import Image from "@/components/images/Image";
 import UpdateUsernameModal from "@/components/modals/UpdateUsernameModal";
@@ -5,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/hooks/useAuthStore";
 import { Loader2 } from "lucide-react";
 import { FC, Suspense } from "react";
-import { SiMagic } from "react-icons/si";
 import { Link } from "react-router-dom";
 
 type NavLinkProps = {
@@ -29,12 +29,7 @@ const NavSection = () => {
 	return (
 		<div className="py-2">
 			<div className="flex items-center justify-between">
-				<div className="flex items-center space-x-2">
-					<div className="p-2 bg-[#ff9900] rounded-full">
-						<SiMagic />
-					</div>
-					<h1 className="text-3xl font-bold">Nitron</h1>
-				</div>
+				<AppLogo />
 				<ul className="flex items-center space-x-8">
 					<NavLink text="Home" />
 					<NavLink text="About Us" />
@@ -75,7 +70,7 @@ const HeroSection = () => {
 						{!user ? (
 							<GetStartedButtonDropdown />
 						) : (
-							<Link to={"/home"}>
+							<Link to={"/home"} data-cy={"go-to-dashboard"}>
 								<Button className="rounded-full">Go to App</Button>
 							</Link>
 						)}

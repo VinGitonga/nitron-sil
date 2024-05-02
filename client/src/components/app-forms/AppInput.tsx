@@ -13,6 +13,7 @@ interface IProps {
 	type?: string;
 	onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 	helperText?: string;
+	disabled?: boolean;
 }
 /**
  * A reusable input component for forms in the application
@@ -27,7 +28,7 @@ interface IProps {
  * @returns  A reusable input component for forms in the application
  */
 
-const AppInput = ({ label, name, control, placeholder, value, onChange, type = "text", helperText }: IProps) => {
+const AppInput = ({ label, name, control, placeholder, value, onChange, type = "text", helperText, disabled = false }: IProps) => {
 	return control ? (
 		<FormField
 			name={name}
@@ -36,7 +37,7 @@ const AppInput = ({ label, name, control, placeholder, value, onChange, type = "
 				<FormItem>
 					<FormLabel>{label}</FormLabel>
 					<FormControl>
-						<Input {...field} placeholder={placeholder} type={type} />
+						<Input {...field} placeholder={placeholder} type={type} disabled={disabled} />
 					</FormControl>
 					{helperText && <FormDescription>{helperText}</FormDescription>}
 					<FormMessage />
@@ -46,7 +47,7 @@ const AppInput = ({ label, name, control, placeholder, value, onChange, type = "
 	) : (
 		<div className="flex flex-col space-y-2">
 			<Label htmlFor={name}>{label}</Label>
-			<Input name={name} placeholder={placeholder} value={value} onChange={onChange} type={type} />
+			<Input name={name} placeholder={placeholder} value={value} onChange={onChange} type={type} disabled={disabled} />
 			{helperText && <p className="text-sm text-gray-500">{helperText}</p>}
 		</div>
 	);
