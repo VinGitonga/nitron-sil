@@ -14,7 +14,7 @@ type NavLinkProps = {
 
 const NewLandingPage = () => {
 	return (
-		<div className="px-28 py-6">
+		<div className="px-6 md:px-28 py-6">
 			<div className="border-b">
 				<NavSection />
 			</div>
@@ -30,7 +30,7 @@ const NavSection = () => {
 		<div className="py-2">
 			<div className="flex items-center justify-between">
 				<AppLogo />
-				<ul className="flex items-center space-x-8">
+				<ul className="hidden md:flex items-center space-x-8">
 					<NavLink text="Home" />
 					<NavLink text="About Us" />
 					<NavLink text="Blog" />
@@ -76,7 +76,7 @@ const HeroSection = () => {
 						)}
 					</div>
 				</div>
-				<div className="col-auto md:col-span-3">
+				<div className="col-auto md:col-span-3 order-first md:order-none">
 					<Suspense fallback={<Loader2 className="w-10 h-10 animate-spin" />}>
 						<Image srcList={["/images/vintage-photos.jpg"]} alt="" className="rounded-3xl h-[600px]" />
 					</Suspense>
