@@ -19,6 +19,7 @@ const formSchema = z.object({
 
 function UpdateUsernameModal() {
 	const { open, setOpen, userInfo } = useUpdateUserModalStore();
+	console.log(userInfo);
 	const { setUser } = useAuthStore();
 	const { saveUserDetails, getUserByEmail } = useUserUtils();
 	const [loading, setLoading] = useState<boolean>(false);
@@ -83,7 +84,14 @@ function UpdateUsernameModal() {
 		if (userInfo) {
 			const { displayName: name, email } = userInfo;
 			setValue("name", name || "");
-			setValue("username", email!.split("@")[0]);
+			if (email) {
+				setValue("username", email!.split("@")[0]);
+			} else {
+				const email = userInfo?.providerData[0]?.email;
+				if (email) {
+					setValue("username", email.split("@")[0]);
+				}
+			}
 		}
 	}, [userInfo]);
 

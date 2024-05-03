@@ -5,7 +5,7 @@ import { useUpdateUserModalStore } from "@/hooks/useUpdateUserModalStore";
 import useUserUtils from "@/hooks/useUserUtils";
 import { firebaseAuth } from "@/lib/firebase";
 import { IUser } from "@/types/User";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
@@ -33,9 +33,9 @@ function GetStartedButtonDropdown() {
 
 	const navigate = useNavigate();
 
-	const onClickSignIn = async () => {
-		const userCred = await signInWithPopup(firebaseAuth, new GoogleAuthProvider());
-		const userExists = await checkUserExists(userCred.user.email!);
+	const onClickSignIn = async (variant: "google" | "github" = "google") => {
+		const userCred = await signInWithPopup(firebaseAuth, variant === "google" ? new GoogleAuthProvider() : new GithubAuthProvider());
+		const userExists = await checkUserExists(userCred.user.email ? userCred.user.email : userCred?.user?.providerData[0]?.email!);
 
 		if (!userExists) {
 			// Show update username modal
@@ -51,6 +51,7 @@ function GetStartedButtonDropdown() {
 
 		navigate("/home");
 	};
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger data-cy="get-started-button" asChild>
@@ -61,13 +62,17 @@ function GetStartedButtonDropdown() {
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem data-cy="get-started-dropdown-sign-in-with-google">
-						<button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100" onClick={onClickSignIn}>
+						<button
+							className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100"
+							onClick={() => onClickSignIn("google")}>
 							<FcGoogle className="w-5 h-5" />
 							Continue with Google
 						</button>
 					</DropdownMenuItem>
 					<DropdownMenuItem data-cy="get-started-dropdown-sign-in-with-github">
-						<button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
+						<button
+							className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100"
+							onClick={() => onClickSignIn("github")}>
 							<FaGithub className="w-5 h-5" />
 							Continue with GitHub
 						</button>
