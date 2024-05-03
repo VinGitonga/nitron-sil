@@ -19,7 +19,6 @@ const formSchema = z.object({
 
 function UpdateUsernameModal() {
 	const { open, setOpen, userInfo } = useUpdateUserModalStore();
-	console.log(userInfo);
 	const { setUser } = useAuthStore();
 	const { saveUserDetails, getUserByEmail } = useUserUtils();
 	const [loading, setLoading] = useState<boolean>(false);
